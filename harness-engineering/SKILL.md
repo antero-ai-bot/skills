@@ -44,14 +44,21 @@ Technical debt is a high-interest loan; pay it down daily.
 To drive a task to completion, an agent should:
 1. **Implement**: Write the code/tests based on intent.
 2. **Review**: Run local and cloud agent-to-agent reviews.
-3. **Validate**: Drive the application (via browser skills or logs).
+3. **Validate**: Run guardrails *inside* the loop (lint, compile, tests, security/static analysis).
 4. **Refine**: Respond to feedback and build failures autonomously.
-5. **Merge**: Self-merge once all mechanical and taste invariants are satisfied.
+5. **Verify Intent**: Re-check acceptance criteria so misalignment does not compound across long runs.
+6. **Merge**: Self-merge once all mechanical and taste invariants are satisfied.
 
 ## 🛠 Tooling Best Practices
 - **Standard Tooling**: Use standard CLI tools (`gh`, `npm`, `git`) directly.
 - **Boring Technology**: Favor stable, well-documented abstractions that are well-represented in training sets.
 - **Repository-Embedded Skills**: Bundle specific task-handling logic (e.g., UI snapshots, log parsers) into the repo so any agent can use them.
+
+---
+
+## 📚 References
+
+- **[Agentic Coding Guardrails](./references/agentic-coding-guardrails.md)** — Implementable guardrails table extracted from industry best practices. Covers CI, static typing, linting, token optimization, shift-left feedback loops, architectural constraints, scenario-based testing, static analysis (MCP), and deterministic hooks.
 
 ---
 
