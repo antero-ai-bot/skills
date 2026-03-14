@@ -1,65 +1,93 @@
 ---
 name: harness-engineering
-description: Leverage LLM agents in an agent-first world by designing environments, specifying intent, and building feedback loops. Use this when building testing harnesses, optimizing CI/CD, improving repo legibility, or establishing autonomous development workflows.
-metadata:
-  version: "1.1"
-  author: "Antero"
+description: Design and improve agentic engineering harnesses that maximize correctness, quality, and autonomous throughput end-to-end. Use when defining intent-first execution loops, acceptance criteria, validation gates, CI/CD guardrails, repository legibility standards, or human-in-the-loop escalation policies for coding agents.
 ---
 
-# Harness Engineering Skill: The Agent-First Workflow
+# Harness Engineering (Intent → Proof → Throughput)
 
-Harness Engineering is the practice of shifting from "writing code" to "designing environments" where AI agents can execute with high reliability and velocity. Your primary job is to enable the feedback loops that allow agents to reason, validate, and recover autonomously.
+Harness engineering is not “make agents code faster.”
+It is: **make outcomes reliable while preserving autonomy**.
 
-## 🎯 Strategic Intent
-Build what is necessary to increase engineering velocity by orders of magnitude. Humans steer; agents execute. 
+## Core Outcome Model
 
-**The Prime Directive**: When a task fails or feels "guess-heavy," the fix is rarely "try harder"—it is to **improve the environment's legibility or enforcement.** If the repo is illegible to you, your first task is to fix the repo so it becomes legible.
+Optimize in this order:
+1. **Intent fidelity** — agent solves the right problem.
+2. **Proof of correctness** — behavior is verified, not claimed.
+3. **Quality and safety** — architectural, security, and operational constraints hold.
+4. **Autonomous throughput** — cycle time improves without increasing risk.
 
-## 🗺️ Core Methodologies
+If autonomy rises while (1)-(3) regress, the harness is failing.
 
-### 1. Legibility as First-Class Requirement
-Agents cannot work on what they cannot see or reason over.
-- **Repository as System of Record**: Knowledge in Slack, Google Docs, or heads does not exist to an agent. Every decision, architectural pattern, and principle must be co-located in the repo as versioned Markdown or Schema.
-- **Bootable Contexts**: Ensure the app is bootable per-task (e.g., git worktree). Agents should be able to launch, drive, and snapshot the UI or logs for any specific change.
-- **Exposed Observability**: Make logs, metrics, and traces directly queryable by the agent. Prompts like "ensure startup is under 800ms" should be mechanically verifiable by the agent itself.
+## Design Principles
 
-### 2. Context Management (Map, not Encyclopedia)
-Avoid monolithic instruction manuals that rot and overwhelm.
-- **Progressive Disclosure**: Treat `AGENTS.md` as a Table of Contents. Provide a map, not a 1,000-page manual.
-- **Gardening Agents**: Use recurring background tasks to scan for stale documentation and open PRs to align docs with reality.
-- **Executable Plans**: Treat plans as first-class artifacts. Version them, track progress, and co-locate decisions with code.
+### 1) Intent First, Tasks Second
+- Encode user intent as explicit, testable acceptance criteria.
+- Require agents to restate target outcomes before implementation.
+- Add checkpoints that compare output against original intent before merge.
 
-### 3. Rigid Architectural Invariants
-Predictable structure allows agents to move fast without decay.
-- **Layered Dependency Enforcement**: Strictly validate dependency directions (e.g., Types → Config → Repo → Service). Disallow cross-cutting concerns except through explicit Providers.
-- **Parse at the Boundary**: Require data shapes to be parsed (not just validated) at every system boundary.
-- **Mechanical Taste (Auto-Fixers)**: Use custom linters to enforce naming conventions, structured logging, and file limits. Prefer linters that provide auto-fix logic or inject remediation instructions directly into error messages.
+**Pattern:** `Intent spec -> Plan -> Implement -> Verify intent again`
 
-### 4. Continuous Garbage Collection
-Technical debt is a high-interest loan; pay it down daily.
-- **Golden Principles**: Encode opinionated rules (e.g., "prefer shared utilities over helpers") and run background agents to refactor deviations automatically.
-- **No YOLO Probing**: Do not allow agents to build on guessed shapes. Use typed SDKs or boundary validation strictly.
+### 2) Make Correctness Mechanical
+- Prefer deterministic checks over prompt reminders.
+- Run validation in-loop (compile, lint, tests, policy, security), not only at PR end.
+- Fail loudly with actionable remediation hints.
 
-## 🏗️ The Autonomous Validation Loop
-To drive a task to completion, an agent should:
-1. **Implement**: Write the code/tests based on intent.
-2. **Review**: Run local and cloud agent-to-agent reviews.
-3. **Validate**: Run guardrails *inside* the loop (lint, compile, tests, security/static analysis).
-4. **Refine**: Respond to feedback and build failures autonomously.
-5. **Verify Intent**: Re-check acceptance criteria so misalignment does not compound across long runs.
-6. **Merge**: Self-merge once all mechanical and taste invariants are satisfied.
+### 3) Build Legibility as Infrastructure
+- Keep architecture decisions, runbooks, and invariants in-repo.
+- Use progressive disclosure (`AGENTS.md` map + focused references).
+- Treat undocumented tribal knowledge as harness debt.
 
-## 🛠 Tooling Best Practices
-- **Standard Tooling**: Use standard CLI tools (`gh`, `npm`, `git`) directly.
-- **Boring Technology**: Favor stable, well-documented abstractions that are well-represented in training sets.
-- **Repository-Embedded Skills**: Bundle specific task-handling logic (e.g., UI snapshots, log parsers) into the repo so any agent can use them.
+### 4) Enforce Boundary Invariants
+- Prevent forbidden dependencies via architecture tests.
+- Parse/normalize inputs at boundaries.
+- Require typed contracts between layers and services.
 
----
+### 5) Prefer Safe Sandboxes for Agent Runs
+- Isolate runtime, data, and side effects.
+- Route risky side effects to reversible sinks (e.g., outbox/log sinks) in preview mode.
+- Make “unsafe mode” explicit and auditable.
 
-## 📚 References
+### 6) Add Human Control at High-Impact Edges
+- Humans define policy and approve exceptions.
+- Agents execute the full loop under policy.
+- Add HITL gates for destructive or external-impact actions.
 
-- **[Agentic Coding Guardrails](./references/agentic-coding-guardrails.md)** — Implementable guardrails table extracted from industry best practices. Covers CI, static typing, linting, token optimization, shift-left feedback loops, architectural constraints, scenario-based testing, static analysis (MCP), and deterministic hooks.
+## End-to-End Harness Loop
 
----
+1. **Intake**: Capture intent, constraints, acceptance criteria.
+2. **Environment prep**: Create reproducible, isolated runtime.
+3. **Execution**: Agent implements against explicit criteria.
+4. **Validation**: Run deterministic guardrails inside loop.
+5. **Evidence**: Produce artifacts (test results, screenshots, logs, diffs).
+6. **Review policy**: Auto-merge if all gates pass; escalate if confidence/risk threshold fails.
+7. **Cleanup + learn**: Tear down resources and feed failures back into harness rules.
 
-*This skill is a living framework. Adapt its principles to the unique needs, compliance, and constraints of your specific project.*
+## Reliability Heuristics
+
+- **Tight loop, short branch lifetime**: integrate frequently.
+- **Diff-scoped fast checks first**; full suite at merge/release gates.
+- **Token hygiene**: surface failures, suppress noisy green logs.
+- **Retry by class**: transient infra failures retry; logic failures do not.
+- **No guessed shapes**: enforce schemas and typed interfaces.
+
+## Anti-Patterns
+
+- Optimizing for code volume instead of verified outcomes.
+- Treating CI as post-hoc QA instead of in-loop enforcement.
+- Allowing agents to perform real external side effects in preview mode.
+- Storing process-critical context in chat threads instead of repo artifacts.
+
+## Practical Example Anchors (Generalized)
+
+Use these as patterns, not prescriptions:
+- **Ephemeral preview environments per task/PR** for isolated autonomous runs.
+- **Identity-gated access** (e.g., IAP/Tailscale-like controls) to reduce exposure.
+- **Sandbox side-effect controls** (e.g., outbox pattern) to prevent accidental external actions.
+- **ChatOps-triggered workflows** to let non-engineers initiate bounded work.
+
+See references for concrete examples and adaptation guidance.
+
+## References
+
+- [agentic-coding-guardrails](./references/agentic-coding-guardrails.md)
+- [background-agent-patterns](./references/background-agent-patterns.md)
