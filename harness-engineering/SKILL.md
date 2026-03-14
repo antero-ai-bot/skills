@@ -1,6 +1,6 @@
 ---
 name: harness-engineering
-description: Design and improve agentic engineering harnesses that maximize correctness, quality, and autonomous throughput end-to-end. Use when defining intent-first execution loops, acceptance criteria, validation gates, CI/CD guardrails, repository legibility standards, or human-in-the-loop escalation policies for coding agents.
+description: Design, audit, and improve agentic engineering harnesses that maximize correctness, quality, and autonomous throughput end-to-end. Use when asked to build or refine testing harnesses, CI/CD guardrails, acceptance-criteria workflows, autonomous coding loops, repository legibility standards, policy gates, or human-in-the-loop escalation for coding agents. Trigger on requests like "improve our agent workflow", "make agents more reliable", "add guardrails", "reduce regressions", "increase autonomous coding quality", or "design an agentic engineering system".
 ---
 
 # Harness Engineering (Intent → Proof → Throughput)

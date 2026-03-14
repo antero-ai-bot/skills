@@ -1,6 +1,6 @@
 ---
 name: background-agent-implementation
-description: Design and implement background coding-agent systems that run asynchronously from chat, issue trackers, or PR workflows. Use when setting up agent orchestration, isolated preview environments, secure access, sandboxed side effects, evidence collection, and human-in-the-loop approval paths.
+description: Design and implement background coding-agent systems that run asynchronously from chat, issue trackers, or PR workflows. Use when asked to set up agent orchestration, ChatOps dispatch, ephemeral preview environments, secure access controls, sandboxed side effects, evidence reporting, and approval gates for autonomous software delivery. Trigger on requests like "build background agents", "run agents from Slack/Discord", "auto-create PRs from prompts", "set up preview env per PR", or "add safe autonomous shipping workflow".
 ---
 
 # Background Agent Implementation
