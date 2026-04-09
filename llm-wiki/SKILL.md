@@ -49,11 +49,11 @@ Periodic health-check:
 
 ## Vault Location
 
-Default vault: `/Users/antero/clawd/obsidian/`
-- Raw sources: `sources/`
-- Wiki pages: `wiki/`
-- Index: `index.md`
-- Log: `log.md`
+**Primary vault (iCloud):** `/Users/antero/Library/Mobile Documents/com~apple~CloudDocs/Obsidian Notes/AI/Wiki/`
+
+**Local working copy:** `/Users/antero/clawd/obsidian/`
+
+Both are synced—edits to either will appear in Obsidian.
 
 ## Usage
 
